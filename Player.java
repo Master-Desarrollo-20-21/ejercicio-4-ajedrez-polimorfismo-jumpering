@@ -43,6 +43,7 @@ public class Player {
                     && board.getPiece(origin).isValidMovement(board, origin, destination)
                     && board.isPieceOnCoordinate(destination) && board.getPiece(destination).getColor() != this.color) {
                 if (board.getPiece(destination).isKing()) {
+                    validMove = true;
                     board.setDeadKing(true);
                     //board.terminate?
                 }
