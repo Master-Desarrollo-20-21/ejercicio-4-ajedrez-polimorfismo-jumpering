@@ -1,21 +1,19 @@
 package Chess;
 
-public class Knight extends Piece{
-
-    public Knight(Color color){
+public class Queen extends Piece{
+    public Queen(Color color) {
         super(color);
         if (this.color == Color.BLACK){
-            this.icon = '\u2658';
+            this.icon = '\u2655';
         } else {
-            this.icon = '\u265E';
+            this.icon = '\u265B';
         }
     }
 
     @Override
     public boolean isValidMovement(Board board, Coordinate origin, Coordinate destination) {
-        //valid movements for Knight algorithm: ////(f1-f2)*(f1-f2) + (c1-c2)*(c1-c2) == 5
-        if ((origin.getX()-destination.getX())*(origin.getX()-destination.getX())
-                + (origin.getY()-destination.getY())*(origin.getY()-destination.getY()) == 5){
+        //valid movements for Queen algorithm: ////(f1==f2) || (c1==c2) || (Math.abs(f1-f2) == Math.abs(c1-c2))
+        if (origin.getX() == destination.getX() || destination.getY() == destination.getY() || ( Math.abs(origin.getX()-destination.getX()) == Math.abs(origin.getY()-destination.getY())) ){
             System.out.println("movimiento permitido");
             return true;
         }
@@ -27,5 +25,4 @@ public class Knight extends Piece{
     public boolean isKing() {
         return false;
     }
-
 }

@@ -4,6 +4,7 @@ public class Turn {
     private Player playerBlack;
     private Player playerWhite;
     private Player current;
+    private int turnCount;
 
     public Turn(){
         playerBlack = new Player(Color.BLACK);
@@ -12,6 +13,7 @@ public class Turn {
     }
 
     public Player next(){
+        turnCount++;
         if (this.current == playerBlack){
             this.current = playerWhite;
             return playerWhite;
@@ -23,5 +25,9 @@ public class Turn {
     public Player getCurrent(){
 
         return this.current;
+    }
+
+    public int getTurnCount(){
+        return this.turnCount;
     }
 }

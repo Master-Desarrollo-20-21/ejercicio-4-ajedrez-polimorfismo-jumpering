@@ -11,7 +11,7 @@ public abstract class Piece {
         this.alive = true;
     }
 
-    public abstract boolean isValidMovement(Coordinate origin, Coordinate destination);
+    public abstract boolean isValidMovement(Board board, Coordinate origin, Coordinate destination);
 
     public Color getColor(){
         return this.color;
@@ -24,6 +24,10 @@ public abstract class Piece {
 
     public void kill(){
         this.alive = false;
+    }
+
+    public void killPiece(Piece piece){
+        piece.kill();
     }
 
     public boolean isAlive(){

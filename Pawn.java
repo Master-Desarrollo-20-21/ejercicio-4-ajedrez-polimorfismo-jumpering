@@ -1,10 +1,10 @@
 package Chess;
 
-public class Pawn extends Piece{
+public class Pawn extends Piece {
 
-    public Pawn(Color color){
+    public Pawn(Color color) {
         super(color);
-        if (this.color == Color.BLACK){
+        if (this.color == Color.BLACK) {
             this.icon = '\u2659';
         } else {
             this.icon = '\u265F';
@@ -12,16 +12,31 @@ public class Pawn extends Piece{
     }
 
     @Override
-    public boolean isValidMovement(Coordinate origin, Coordinate destination){
+    public boolean isValidMovement(Board board, Coordinate origin, Coordinate destination) {
         //valid movements for Rook algorithm: ////salida 1 o 2, luego solo 1, y matar diagonal 1
-        if (origin.getY() == destination.getY()+1 || origin.getY() == destination.getY()-1){
-            System.out.println("movimiento permitido");
-            return true;
-        } else {
-            System.out.println("movimiento NO permitido");
-            return false;
+        //si solo se mueve adelante OJO + y - direcciones
+        if ( origin.getY() == destination.getY() && origin.getX() == destination.getX() + 1 || origin.getX() == destination.getX() - 1) {
+            //ahora si hay una delante no puede mover
+            if (board.isPieceOnCoordinate(destination)
+                    && board.getPiece(destination).getColor() != color
+                    && board.getCountTurn() == 1) {
+                System.out.println("movimiento permitido");
+                return false;
+            }
+            //ahora si no hay nadie delante puede mover
+            if (!board.isPieceOnCoordinate(destination)) {
+                System.out.println("movimiento permitido");
+                return true;
+            }
+            //si tiran en diagonal y hay alguien (mata)
+//            if (origin.getY() == destination.getY() && origin.getX() == destination.getX() + 1 || origin.getX() == destination.getX() - 1) {
+//                return true;
+//            }
         }
+        System.out.println("movimiento NO permitido");
+        return false;
     }
+
 
     @Override
     public boolean isKing() {

@@ -5,8 +5,10 @@ import java.util.HashMap;
 public class Board {
     private HashMap<Coordinate, Piece> pieces;
     private boolean deadKing;
+    private int countTurn;
     public Board(){
         deadKing = false;
+        countTurn = 0;
         pieces = new HashMap<Coordinate, Piece>();
         pieces.put(new Coordinate(0,1), new Knight(Color.BLACK));
         pieces.put(new Coordinate(0,6), new Knight(Color.BLACK));
@@ -21,6 +23,15 @@ public class Board {
 
         pieces.put(new Coordinate(7,0), new Rook(Color.WHITE));
         pieces.put(new Coordinate(7,7), new Rook(Color.WHITE));
+
+        pieces.put(new Coordinate(0,3), new Queen(Color.BLACK));
+        pieces.put(new Coordinate(7,3), new Queen(Color.WHITE));
+
+        pieces.put(new Coordinate(0,2), new Bishop(Color.BLACK));
+        pieces.put(new Coordinate(0,5), new Bishop(Color.BLACK));
+
+        pieces.put(new Coordinate(7,2), new Bishop(Color.WHITE));
+        pieces.put(new Coordinate(7,5), new Bishop(Color.WHITE));
 
     }
 
@@ -73,5 +84,13 @@ public class Board {
     public void setDeadKing(boolean deadKing){
 
         this.deadKing = deadKing;
+    }
+
+    public void incrementCountTurn(){
+        this.countTurn++;
+    }
+
+    public int getCountTurn(){
+        return this.countTurn;
     }
 }
