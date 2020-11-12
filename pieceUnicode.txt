@@ -1,0 +1,6 @@
+Pawn:   '\u2659', '\u265F'
+Rook:    '\u2656', '\u265C'
+Knight: '\u2658', '\u265E'
+Bishop: '\u2657', '\u265D'
+Queen: '\u2655', '\u265B'
+King:     '\u2654', '\u265A'

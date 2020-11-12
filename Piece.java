@@ -18,7 +18,7 @@ public abstract class Piece {
     }
 
     public char show(){
-        //System.out.print(' ');
+        System.out.print(' ');
         return this.icon;
     }
 
@@ -29,4 +29,6 @@ public abstract class Piece {
     public boolean isAlive(){
         return this.alive;
     }
+
+    public abstract boolean isKing();
 }

@@ -1,7 +1,6 @@
 package Chess;
 
 public class Chess {
-
     private Board board;
     private Turn turn;
 
@@ -11,28 +10,23 @@ public class Chess {
     }
 
     public void play(){
+        //TODO: LIMITES FUERA DEL TABLERO + PIEZAS ENTRE ORIGEN/DESTINO
+        do {
+            do {
+                board.show();
+                IO.getInstance().printText("Turno de " + turn.getCurrent().getColor());
+                turn.getCurrent().move(board);
+                turn.next();
+            }while(!board.isDeadKing());
+        }while(this.isResumed());
+    }
+
+    private boolean isResumed(){
+        String answer;
         do{
-            board.show();
-            IO.getInstance().printText("Turno de " + turn.getCurrent().getColor());
-            int originX = IO.getInstance().readInt("origen X: ");
-            int originY = IO.getInstance().readInt("origen Y: ");
-            int destinationX = IO.getInstance().readInt("destino X: ");
-            int destinationY = IO.getInstance().readInt("destino Y: ");
-            Coordinate userOrigin = new Coordinate(originX,originY);
-            Coordinate userDestination = new Coordinate(destinationX,destinationY);
-            if (board.isPieceOnCordinate(userOrigin) && board.getPiece(userOrigin).getColor() == turn.getCurrentColor()){
-                Piece piece = board.getPiece(userOrigin);
-                piece.isValidMovement(userOrigin, userDestination);
-                if (board.isPieceOnCordinate(userDestination)){
-                    board.getPiece(userDestination).kill();
-                    board.setCoordinateOnPiece(userOrigin,userDestination);
-                } else {
-                    board.setCoordinateOnPiece(userOrigin,userDestination);
-                }
-            }
-            turn.next();
-        }while(true);
-        //}while(board.getBlackKingAliveState() || board.getWhiteKingAliveState());
+            answer = IO.getInstance().readText("¿Reiniar la partida? (s/n)");
+        } while( !answer.equals("s") && !answer.equals("n") );
+        return answer.equals("s");
     }
 
     public static void main(String[] args) {

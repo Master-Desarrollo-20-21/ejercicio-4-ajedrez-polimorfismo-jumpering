@@ -21,11 +21,7 @@ public class Turn {
     }
 
     public Player getCurrent(){
+
         return this.current;
     }
-
-    public Color getCurrentColor(){
-        return this.current.getColor();
-    }
-
 }
