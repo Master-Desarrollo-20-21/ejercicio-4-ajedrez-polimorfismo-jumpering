@@ -42,7 +42,7 @@ public class Board {
                 if (pieces.containsKey(coordinate) && pieces.get(coordinate).isAlive()) {
                     System.out.print(pieces.get(coordinate).show());
                 } else {
-                    System.out.print(" + ");
+                    System.out.print( " " + '\220' + "");
                 }
             }
             System.out.println();

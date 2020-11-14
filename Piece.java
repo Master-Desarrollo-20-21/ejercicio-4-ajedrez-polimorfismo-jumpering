@@ -18,7 +18,7 @@ public abstract class Piece {
     }
 
     public char show(){
-        System.out.print(' ');
+        System.out.print(" ");
         return this.icon;
     }
 

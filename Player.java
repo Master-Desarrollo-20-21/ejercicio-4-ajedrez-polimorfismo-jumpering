@@ -1,5 +1,8 @@
 package Chess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
 
     private Color color;
@@ -26,6 +29,7 @@ public class Player {
 
     public void move(Board board) {
         boolean validMove = false;
+        boolean freeWay = true;
         do {
             IO.getInstance().printTextWithoutNewLine("Inserte coordenada origen: ");
             Coordinate origin = this.getValidCoordinate();
@@ -35,22 +39,49 @@ public class Player {
             if (board.isPieceOnCoordinate(origin) && board.getPiece(origin).getColor() == this.color
                     && board.getPiece(origin).isValidMovement(board, origin, destination)
                     && !board.isPieceOnCoordinate(destination)) {
-                board.setCoordinateOnPiece(origin, destination);
+                System.out.println("origen YO, mov OK, dest vacio");
                 validMove = true;
             }
             //si origen = yo de mi color + movimiento permitido + destino = alguien del distinto color
             if (board.isPieceOnCoordinate(origin) && board.getPiece(origin).getColor() == this.color
                     && board.getPiece(origin).isValidMovement(board, origin, destination)
                     && board.isPieceOnCoordinate(destination) && board.getPiece(destination).getColor() != this.color) {
-                if (board.getPiece(destination).isKing()) {
-                    validMove = true;
-                    board.setDeadKing(true);
-                    //board.terminate?
-                }
-                board.getPiece(destination).kill();
-                board.setCoordinateOnPiece(origin, destination);
+                System.out.println("origen YO, mov OK, dest PIEZA DISTINTO COLOR");
                 validMove = true;
             }
+
+            //si origen = yo de mi color + movimiento permitido + destino = alguien del distinto color
+            //vale, ara miraré si hay piezas en medio, HORIZONTALES
+            List<Coordinate> coordinateListHorizontal = origin.betwinCoordinatesOnHorizontal(destination);
+            for ( Coordinate coordinate : coordinateListHorizontal ) {
+                if ( board.isPieceOnCoordinate( coordinate ) ){
+                    System.out.println("pieza en medio HORIZONTAL");
+                    freeWay = false;
+                }
+            }
+            //vale, ara miraré si hay piezas en medio, VERTICALES
+            List<Coordinate> coordinateListVertical = origin.betwinCoordinatesOnVertical(destination);
+            for ( Coordinate coordinate : coordinateListVertical ) {
+                if ( board.isPieceOnCoordinate( coordinate ) ){
+                    System.out.println("pieza en medio VERTICAL");
+                    freeWay = false;
+                }
+            }
+            if (freeWay && validMove){
+                System.out.println("freeWay y validMove");
+//                if (board.getPiece(destination).isKing()) {
+//                    System.out.println("destino es rey, ");
+//                    board.setDeadKing(true);
+//                    //board.terminate?
+//                }
+                if ( board.isPieceOnCoordinate(destination) ){
+                    board.getPiece(destination).kill();
+                }
+                System.out.println("MUEVO!!!");
+                board.setCoordinateOnPiece(origin, destination);
+            }
+
+            System.out.println("Movimiento NO permitido");
         } while (!validMove);
     }
 }
