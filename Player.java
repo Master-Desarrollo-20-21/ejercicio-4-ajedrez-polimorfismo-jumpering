@@ -1,6 +1,5 @@
 package Chess;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -52,7 +51,7 @@ public class Player {
 
             //si origen = yo de mi color + movimiento permitido + destino = alguien del distinto color
             //vale, ara miraré si hay piezas en medio, HORIZONTALES
-            List<Coordinate> coordinateListHorizontal = origin.betwinCoordinatesOnHorizontal(destination);
+            List<Coordinate> coordinateListHorizontal = origin.betweenCoordinatesOnHorizontal(destination);
             for ( Coordinate coordinate : coordinateListHorizontal ) {
                 if ( board.isPieceOnCoordinate( coordinate ) ){
                     System.out.println("pieza en medio HORIZONTAL");
@@ -60,28 +59,39 @@ public class Player {
                 }
             }
             //vale, ara miraré si hay piezas en medio, VERTICALES
-            List<Coordinate> coordinateListVertical = origin.betwinCoordinatesOnVertical(destination);
+            List<Coordinate> coordinateListVertical = origin.betweenCoordinatesOnVertical(destination);
             for ( Coordinate coordinate : coordinateListVertical ) {
                 if ( board.isPieceOnCoordinate( coordinate ) ){
                     System.out.println("pieza en medio VERTICAL");
                     freeWay = false;
                 }
             }
+            //vale, ara miraré si hay piezas en medio, DIAGONALES
+            List<Coordinate> coordinateListDiagonal = origin.betweenCoordinatesOnDiagonal(destination);
+            for ( Coordinate coordinate : coordinateListDiagonal ) {
+                if ( board.isPieceOnCoordinate( coordinate ) ){
+                    System.out.println("pieza en medio DIAGONAL");
+                    freeWay = false;
+                }
+            }
             if (freeWay && validMove){
                 System.out.println("freeWay y validMove");
-//                if (board.getPiece(destination).isKing()) {
-//                    System.out.println("destino es rey, ");
-//                    board.setDeadKing(true);
-//                    //board.terminate?
-//                }
+
+                //OJO ESTO TIENE QUE ESTAR PORQUE MATA AL REY, PERO DA UN OUTBOUND EXCEPTION
+                if (board.isPieceOnCoordinate(destination) && board.getPiece(destination).isKing()) {
+                    System.out.println("destino es rey, marco en board que está muerto y lo mato");
+                    board.setDeadKing(true);
+                    System.out.println("EXIT");
+                    //board.terminate?
+                }
                 if ( board.isPieceOnCoordinate(destination) ){
                     board.getPiece(destination).kill();
                 }
                 System.out.println("MUEVO!!!");
                 board.setCoordinateOnPiece(origin, destination);
+            } else {
+                System.out.println("Movimiento NO permitido");
             }
-
-            System.out.println("Movimiento NO permitido");
         } while (!validMove);
     }
 }

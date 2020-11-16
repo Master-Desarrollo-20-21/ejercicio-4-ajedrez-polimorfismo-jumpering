@@ -18,7 +18,7 @@ public class Pawn extends Piece {
         //valid movements for Rook algorithm: ////salida 1 o 2, luego solo 1, y matar diagonal 1
         //si solo se mueve adelante OJO + y - direcciones
         //if ( origin.getY() == destination.getY() && origin.getX() == destination.getX() + 1 || origin.getX() == destination.getX() - 1) {
-        if (origin.getY() == destination.getY()) {
+        if (origin.getY() == destination.getY() && destination.x == origin.x + 1 || destination.x == origin.x - 1) {
             System.out.println("movimiento permitido");
             firstMovement = false;
             return true;

@@ -33,6 +33,8 @@ public class Board {
         pieces.put(new Coordinate(7,2), new Bishop(Color.WHITE));
         pieces.put(new Coordinate(7,5), new Bishop(Color.WHITE));
 
+        pieces.put(new Coordinate(0,4), new King(Color.BLACK));
+        pieces.put(new Coordinate(7,4), new King(Color.WHITE));
     }
 
     public void show() {
@@ -42,8 +44,9 @@ public class Board {
                 if (pieces.containsKey(coordinate) && pieces.get(coordinate).isAlive()) {
                     System.out.print(pieces.get(coordinate).show());
                 } else {
-                    System.out.print( " " + '\220' + "");
+                    System.out.print( "#");
                 }
+                //System.out.print("_");
             }
             System.out.println();
         }

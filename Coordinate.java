@@ -10,7 +10,7 @@ public class Coordinate {
     protected int x;
     protected int y;
 
-    public Coordinate(int x, int y){
+    public Coordinate(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -29,33 +29,35 @@ public class Coordinate {
         return Objects.hash(x, y);
     }
 
-    public String toString(){
+    public String toString() {
 
         return "x: " + this.x + ", y: " + this.y;
     }
 
-    public int getX(){
+    public int getX() {
 
         return this.x;
     }
 
-    public int getY(){
+    public int getY() {
 
         return this.y;
     }
 
-    public List<Coordinate> betwinCoordinatesOnHorizontal(Coordinate coordinate){
+    public List<Coordinate> betweenCoordinatesOnHorizontal(Coordinate coordinate) {
         List<Coordinate> coordinateList = new ArrayList<Coordinate>();
-        if ( this.y < coordinate.y && this.x == coordinate.x ){
+        if (this.y < coordinate.y && this.x == coordinate.x) {
+            System.out.println("Traza Horizontal origen más pequeño");
             int diference = this.y - coordinate.y;
-            diference = diference -1;//esto me dice quantas hay en medio,
-            for (int i = 0; i < diference; i++){
+            diference = diference - 1;//esto me dice quantas hay en medio,
+            for (int i = 0; i < diference; i++) {
                 coordinateList.add(new Coordinate(this.x, this.y + (i + 1)));
             }
-        } else if ( this.y > coordinate.y && this.x == coordinate.x ){
+        } else if (this.y > coordinate.y && this.x == coordinate.x) {
+            System.out.println("Traza Horizontal origen más grande");
             int diference = coordinate.y - this.y;
-            diference = diference -1;//esto me dice quantas hay en medio,
-            for (int i = 0; i < diference; i++){
+            diference = diference - 1;//esto me dice quantas hay en medio,
+            for (int i = 0; i < diference; i++) {
                 coordinateList.add(new Coordinate(this.x, this.y - (i + 1)));
             }
         }
@@ -63,43 +65,70 @@ public class Coordinate {
     }
 
 
-    public List<Coordinate> betwinCoordinatesOnVertical(Coordinate coordinate){
+    public List<Coordinate> betweenCoordinatesOnVertical(Coordinate coordinate) {
         List<Coordinate> coordinateList = new ArrayList<Coordinate>();
-        if ( this.x < coordinate.x && this.y == coordinate.y ){
-            System.out.println("Traza Verticales origen mñas pequeño");
+        if (this.x < coordinate.x && this.y == coordinate.y) {
+            System.out.println("Traza Verticales origen más pequeño");
             int diference = this.x - coordinate.x;
-            diference = diference -1;//esto me dice quantas hay en medio,
-            for (int i = 0; i < diference; i++){
-                coordinateList.add(new Coordinate(this.x + (i + 1), this.y ));
+            diference = diference - 1;//esto me dice quantas hay en medio,
+            for (int i = 0; i < diference; i++) {
+                coordinateList.add(new Coordinate(this.x + (i + 1), this.y));
             }
-        } else if ( this.x > coordinate.x && this.y == coordinate.y ){
+        } else if (this.x > coordinate.x && this.y == coordinate.y) {
             System.out.println("Traza Verticales origen más grande");
             int diference = coordinate.x - this.x;
-            diference = diference -1;//esto me dice quantas coordenadas hay en medio,
-            for (int i = 0; i < diference; i++){
-                coordinateList.add(new Coordinate(this.x - ( i+1 ), this.y ));
+            diference = diference - 1;//esto me dice quantas coordenadas hay en medio,
+            for (int i = 0; i < diference; i++) {
+                coordinateList.add(new Coordinate(this.x - (i + 1), this.y));
             }
         }
         return coordinateList;
     }
 
 
-    public List<Coordinate> betwinCoordinatesOnDiagonal(Coordinate coordinate){
+    public List<Coordinate> betweenCoordinatesOnDiagonal(Coordinate coordinate) {
         List<Coordinate> coordinateList = new ArrayList<Coordinate>();
-        if ( this.x < coordinate.x && this.y == coordinate.y ){
-            int diference = this.x - coordinate.x;
-            diference = diference -1;//esto me dice quantas hay en medio,
-            for (int i = 0; i < diference; i++){
-                coordinateList.add(new Coordinate(this.x + (i + 1), this.y ));
+        int diference = 0;
+        if (this.x < coordinate.x && this.x + this.y == coordinate.x + coordinate.y) {
+            System.out.println("1");
+            diference = coordinate.x - this.x;
+            diference = diference - 1;//esto me dice quantas hay en medio,
+            for (int i = 0; i < diference; i++) {
+                coordinateList.add(new Coordinate(this.x + (i + 1), this.y - (i + 1)));
             }
-        } else if ( this.x > coordinate.x && this.y == coordinate.y ){
-            int diference = coordinate.x - this.x;
-            diference = diference -1;//esto me dice quantas hay en medio,
-            for (int i = 0; i < diference; i++){
-                coordinateList.add(new Coordinate(this.x - ( i+1 ), this.y ));
+        }
+
+        if (this.x > coordinate.x && this.x + this.y == coordinate.x + coordinate.y) {
+            System.out.println("2");
+            diference = this.x - coordinate.x;
+            diference = diference - 1;//esto me dice quantas hay en medio,
+            for (int i = 0; i < diference; i++) {
+                coordinateList.add(new Coordinate(this.x - (i + 1), this.y + (i + 1)));
             }
+        }
+
+
+        if ( this.x > coordinate.x && this.y - this.x == coordinate.y - coordinate.x ) {
+            System.out.println("3");
+            diference = this.x - coordinate.x;
+            diference = diference - 1;//esto me dice quantas hay en medio,
+            for (int i = 0; i < diference; i++) {
+                coordinateList.add(new Coordinate(this.x - (i + 1), this.y - (i + 1)));
+            }
+        }
+
+        if ( this.x < coordinate.x && this.y - this.x == coordinate.y - coordinate.x ) {
+            System.out.println("4");
+            diference = coordinate.x - this.x;
+            diference = diference - 1;//esto me dice quantas hay en medio,
+            for (int i = 0; i < diference; i++) {
+                coordinateList.add(new Coordinate(this.x + (i + 1), this.y + (i + 1)));
+            }
+        }
+
+        for (Coordinate coordinatePrint : coordinateList) {
+            System.out.println("coordenadas en medio" + coordinatePrint.toString());
         }
         return coordinateList;
     }
-
 }
