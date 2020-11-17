@@ -12,12 +12,9 @@ public class Queen extends Piece{
 
     @Override
     public boolean isValidMovement(Board board, Coordinate origin, Coordinate destination) {
-        //valid movements for Queen algorithm: ////(f1==f2) || (c1==c2) || (Math.abs(f1-f2) == Math.abs(c1-c2))
-        if (origin.getX() == destination.getX() || destination.getY() == destination.getY() || ( Math.abs(origin.getX()-destination.getX()) == Math.abs(origin.getY()-destination.getY())) ){
-            System.out.println("movimiento permitido");
+        if (origin.getRow() == destination.getRow() || destination.getColumn() == destination.getColumn() || ( Math.abs(origin.getRow()-destination.getRow()) == Math.abs(origin.getColumn()-destination.getColumn())) ){
             return true;
         }
-        System.out.println("movimiento NO permitido");
         return false;
     }
 

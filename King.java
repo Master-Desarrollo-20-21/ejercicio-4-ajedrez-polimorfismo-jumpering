@@ -12,12 +12,9 @@ public class King extends Piece{
 
     @Override
     public boolean isValidMovement(Board board, Coordinate origin, Coordinate destination) {
-        //valid movements for King algorithm: ////(Math.abs(f1-f2)<=1) && (Math.abs(c1-c2) <=1)
-        if ((Math.abs(origin.getX() - destination.getX()) <= 1) && (Math.abs(origin.getY() - destination.getY()) <= 1)){
-            System.out.println("movimiento permitido");
+        if ((Math.abs(origin.getRow() - destination.getRow()) <= 1) && (Math.abs(origin.getColumn() - destination.getColumn()) <= 1)){
             return true;
         }
-        System.out.println("movimiento NO permitido");
         return false;
     }
 

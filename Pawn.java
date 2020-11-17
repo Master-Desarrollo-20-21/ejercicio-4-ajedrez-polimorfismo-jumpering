@@ -15,11 +15,9 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isValidMovement(Board board, Coordinate origin, Coordinate destination) {
-        //valid movements for Rook algorithm: ////salida 1 o 2, luego solo 1, y matar diagonal 1
+        //valid movements for Rook algorithm: ////salida 1 o 2, luego solo 1, y matar diagonal 1 y -1
         //si solo se mueve adelante OJO + y - direcciones
-        //if ( origin.getY() == destination.getY() && origin.getX() == destination.getX() + 1 || origin.getX() == destination.getX() - 1) {
-        if (origin.getY() == destination.getY() && destination.x == origin.x + 1 || destination.x == origin.x - 1) {
-            System.out.println("movimiento permitido");
+        if (origin.getColumn() == destination.getColumn() && destination.x == origin.x + 1 || destination.x == origin.x - 1) {
             firstMovement = false;
             return true;
         }
@@ -29,7 +27,6 @@ public class Pawn extends Piece {
 //        if ( origin.getX() == destination.getX() + 1  && origin.getY() == destination.getY() + 1 || origin.getY() == destination.getY() - 1) {
 //            return true;
 //        }
-        System.out.println("movimiento NO permitido");
         return false;
     }
 

@@ -34,11 +34,11 @@ public class Coordinate {
         return "x: " + this.x + ", y: " + this.y;
     }
 
-    public int getX() {
+    public int getRow() {
         return this.x;
     }
 
-    public int getY() {
+    public int getColumn() {
         return this.y;
     }
 

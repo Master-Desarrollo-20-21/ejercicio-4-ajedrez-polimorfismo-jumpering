@@ -10,7 +10,7 @@ public class Chess {
     }
 
     public void play(){
-        //TODO: LIMITES FUERA DEL TABLERO
+        //TODO: LIMITES FUERA DEL TABLERO + doble do en this.play() + acabar partida + peón 2 movimientos y matar diagonal
         do {
             do {
                 board.show();

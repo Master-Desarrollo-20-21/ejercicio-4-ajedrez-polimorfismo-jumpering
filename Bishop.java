@@ -13,7 +13,7 @@ public class Bishop extends Piece{
     @Override
     public boolean isValidMovement(Board board, Coordinate origin, Coordinate destination) {
         //valid movements for Bishop algorithm: ////Math.abs(f1 – f2) == Math.abs(c1 – c2)
-        if (Math.abs(origin.getX() - destination.getX()) == Math.abs(origin.getY() - destination.getY()) ){
+        if (Math.abs(origin.getRow() - destination.getRow()) == Math.abs(origin.getColumn() - destination.getColumn()) ){
             System.out.println("movimiento permitido");
             return true;
         }

@@ -49,27 +49,11 @@ public class Player {
     }
 
     private boolean piecesBetweenCoordinates(Board board, Coordinate origin, Coordinate destination){
-        //vale, ara miraré si hay piezas en medio, HORIZONTALES
-        List<Coordinate> coordinateListHorizontal = origin.betweenCoordinatesOnHorizontal(destination);
-        for ( Coordinate coordinate : coordinateListHorizontal ) {
+        List<Coordinate> coordinateList = origin.betweenCoordinatesOnHorizontal(destination);
+        coordinateList.addAll(origin.betweenCoordinatesOnVertical(destination));
+        coordinateList.addAll(origin.betweenCoordinatesOnDiagonal(destination));
+        for (Coordinate coordinate : coordinateList){
             if ( board.isPieceOnCoordinate( coordinate ) ){
-                System.out.println("pieza en medio HORIZONTAL");
-                return false;
-            }
-        }
-        //vale, ara miraré si hay piezas en medio, VERTICALES
-        List<Coordinate> coordinateListVertical = origin.betweenCoordinatesOnVertical(destination);
-        for ( Coordinate coordinate : coordinateListVertical ) {
-            if ( board.isPieceOnCoordinate( coordinate ) ){
-                System.out.println("pieza en medio VERTICAL");
-                return false;
-            }
-        }
-        //vale, ara miraré si hay piezas en medio, DIAGONALES
-        List<Coordinate> coordinateListDiagonal = origin.betweenCoordinatesOnDiagonal(destination);
-        for ( Coordinate coordinate : coordinateListDiagonal ) {
-            if ( board.isPieceOnCoordinate( coordinate ) ){
-                System.out.println("pieza en medio DIAGONAL");
                 return false;
             }
         }
@@ -77,18 +61,14 @@ public class Player {
     }
 
     private boolean proposedMovementIsValid(Board board, Coordinate origin, Coordinate destination){
-        //si origen = yo de mi color + movimiento permitido + destino = nadie
         if (board.isPieceOnCoordinate(origin) && board.getPiece(origin).getColor() == this.color
                 && board.getPiece(origin).isValidMovement(board, origin, destination)
                 && !board.isPieceOnCoordinate(destination)) {
-            System.out.println("origen YO, mov OK, dest vacio");
             return true;
         }
-        //si origen = yo de mi color + movimiento permitido + destino = alguien del distinto color
         if (board.isPieceOnCoordinate(origin) && board.getPiece(origin).getColor() == this.color
                 && board.getPiece(origin).isValidMovement(board, origin, destination)
                 && board.isPieceOnCoordinate(destination) && board.getPiece(destination).getColor() != this.color) {
-            System.out.println("origen YO, mov OK, dest PIEZA DISTINTO COLOR");
             return true;
         }
         return false;
