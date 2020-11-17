@@ -10,7 +10,7 @@ public class Chess {
     }
 
     public void play(){
-        //TODO: LIMITES FUERA DEL TABLERO + PIEZAS ENTRE ORIGEN/DESTINO
+        //TODO: LIMITES FUERA DEL TABLERO
         do {
             do {
                 board.show();

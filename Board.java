@@ -42,9 +42,10 @@ public class Board {
             for (int j = 0; j < 8; j++) {
                 Coordinate coordinate = new Coordinate(i, j);
                 if (pieces.containsKey(coordinate) && pieces.get(coordinate).isAlive()) {
+                    System.out.print(" ");
                     System.out.print(pieces.get(coordinate).show());
                 } else {
-                    System.out.print( "#");
+                    System.out.print( " # ");
                 }
                 //System.out.print("_");
             }
