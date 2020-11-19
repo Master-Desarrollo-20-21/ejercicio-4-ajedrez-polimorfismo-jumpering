@@ -10,15 +10,13 @@ public class Chess {
     }
 
     public void play(){
-        //TODO: LIMITES FUERA DEL TABLERO + doble do en this.play() + acabar partida + peón 2 movimientos y matar diagonal
+        //TODO: acabar partida + peón 2 movimientos salida y matar diagonal (ojo que mata recto)
         do {
-            do {
-                board.show();
-                IO.getInstance().printText("Turno de " + turn.getCurrent().getColor());
-                turn.getCurrent().move(board);
-                turn.next();
-            }while(!board.isDeadKing());
-        }while(this.isResumed());
+            board.show();
+            IO.getInstance().printText("Turno de " + turn.getCurrent().getColor());
+            turn.getCurrent().move(board);
+            turn.next();
+        }while(!board.isDeadKing() || this.isResumed());
     }
 
     private boolean isResumed(){

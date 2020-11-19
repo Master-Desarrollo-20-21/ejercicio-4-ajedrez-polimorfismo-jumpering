@@ -1,6 +1,9 @@
 package Chess;
 
 import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Player {
 
@@ -15,37 +18,45 @@ public class Player {
         return this.color;
     }
 
+    private boolean isValidPattern(){
+
+
+        return false;
+    }
+
     public Coordinate getValidCoordinate(){
-        int x, y;
+        Pattern PATTERN = Pattern.compile( "^[0-7](,[0-7])*$");
+        Matcher match;
+        String userInput;
         do {
-            String userCoordinate = IO.getInstance().readText("(separado por comas): ");
-            String[] originArray = userCoordinate.split(",");
-            x = Integer.parseInt(originArray[0]);
-            y = Integer.parseInt(originArray[1]);
-        } while ( (x < 0 || x > MAXIM_SIZE_BOARD) && (y < 0 || y > MAXIM_SIZE_BOARD));
-        return new Coordinate(x,y);
+            userInput = Mastermind.IO.getInstance().readText("(0-7,0-7 formato) ");
+            match = PATTERN.matcher(userInput);
+        }while (!match.find());
+        int x, y;
+        String[] originArray = userInput.split(",");
+        x = Integer.parseInt(originArray[0]);
+        y = Integer.parseInt(originArray[1]);
+        return new Coordinate(x, y);
     }
 
     public void move(Board board) {
         Coordinate origin;
         Coordinate destination;
         do {
-            IO.getInstance().printTextWithoutNewLine("Inserte coordenada origen: ");
+            IO.getInstance().printTextWithoutNewLine("Coordenada origen: ");
             origin = this.getValidCoordinate();
-            IO.getInstance().printTextWithoutNewLine("Inserte coordenada destino: ");
+            IO.getInstance().printTextWithoutNewLine("Coordenada destino: ");
             destination = this.getValidCoordinate();
-            if (this.piecesBetweenCoordinates(board, origin, destination)
-                    && this.proposedMovementIsValid(board, origin, destination)){
-                if (board.isPieceOnCoordinate(destination) && board.getPiece(destination).isKing()) {
-                    board.setDeadKing(true);
-                    //board.terminate?
-                }
-                if ( board.isPieceOnCoordinate(destination) ){
-                    board.getPiece(destination).kill();
-                }
-                board.setCoordinateOnPiece(origin, destination);
-            }
-        } while (proposedMovementIsValid(board, origin, destination));
+        } while (!proposedMovementIsValid(board, origin, destination)
+                || piecesBetweenCoordinates(board, origin, destination));
+        if (board.isPieceOnCoordinate(destination) && board.getPiece(destination).isKing()) {
+            board.setDeadKing(true);
+            //board.terminate?
+        }
+        if ( board.isPieceOnCoordinate(destination) ){
+            board.getPiece(destination).kill();
+        }
+        board.setCoordinateOnPiece(origin, destination);
     }
 
     private boolean piecesBetweenCoordinates(Board board, Coordinate origin, Coordinate destination){
@@ -54,23 +65,28 @@ public class Player {
         coordinateList.addAll(origin.betweenCoordinatesOnDiagonal(destination));
         for (Coordinate coordinate : coordinateList){
             if ( board.isPieceOnCoordinate( coordinate ) ){
-                return false;
+                System.out.println("piezas entre coordenadas");
+                return true;
             }
         }
-        return true;
+        System.out.println("No hay piezas entre coordenadas");
+        return false;
     }
 
     private boolean proposedMovementIsValid(Board board, Coordinate origin, Coordinate destination){
         if (board.isPieceOnCoordinate(origin) && board.getPiece(origin).getColor() == this.color
                 && board.getPiece(origin).isValidMovement(board, origin, destination)
                 && !board.isPieceOnCoordinate(destination)) {
+            System.out.println("propuesto true");
             return true;
         }
         if (board.isPieceOnCoordinate(origin) && board.getPiece(origin).getColor() == this.color
                 && board.getPiece(origin).isValidMovement(board, origin, destination)
                 && board.isPieceOnCoordinate(destination) && board.getPiece(destination).getColor() != this.color) {
+            System.out.println("propuesto true");
             return true;
         }
+        System.out.println("propuesto false");
         return false;
     }
 }
